@@ -1,0 +1,8 @@
+{
+  "name": "wikireader",
+  "description": "A reader using the Wikipedia API",
+  "author": "Alexander Löhn <alexloehn@yahoo.de>",
+  "dependencies": {
+    "express": "4.10.x"
+  }
+}
