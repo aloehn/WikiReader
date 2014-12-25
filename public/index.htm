@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de" ng-app="WikiReaderApp">
+
+<head>
+    <title></title>
+
+    <!-- Use combined CSS -->
+    <link rel="stylesheet" href="/resrc/style/default/reset.css" />
+    <link rel="stylesheet" href="/resrc/style/default/global.css" />
+
+    <link rel="stylesheet" href="/resrc/font/font.css" />
+    <link rel="stylesheet" href="/resrc/style/site.css" />
+    <link rel="stylesheet" href="/resrc/style/global.css" />
+    <link rel="stylesheet" href="/resrc/style/search.css" />
+    <link rel="stylesheet" href="/resrc/style/article.css" />
+
+    <!-- TODO: Remove jQuery if not needed -->
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.7/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.7/angular-route.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.7/angular-animate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.7/angular-sanitize.min.js"></script>
+    
+    <script src="/core/Wikipedia.js"></script>
+    <script src="/controller/app.js"></script>
+    <script src="/controller/search.js"></script>
+    <script src="/controller/article.js"></script>
+
+</head>
+
+<body>
+    
+    <div ng-view ng-animate="'animate'"></div>
+    
+    <script type="text/ng-template" id="/view/search">
+        <div id="search">
+            <form ng-submit="search(searchText)">
+                <div class="form-inputs">
+                    <input type="text" ng-model="searchText" ng-keydown="keypress(searchText, $event)" ng-blur="unselect()" placeholder="Type in ..." />
+                    <button type="submit">Find</button>
+                </div>
+                <div class="form-info">
+                    <p ng-show="result">
+                        We've found <b>{{result.list.length}}</b> articles for <b>'{{ result.searchText }}'</b> in {{ result.time }} ms 
+                    </p>
+                </div>
+            </form>
+            <div id="results">
+                <ul>
+                    <li class="result" ng-repeat="result in result.list">
+                        <a href="{{ result.link }}" ng-click="open(result.title, result.description); $event.preventDefault();">
+                            <span class="result-title">{{ result.title }}</span>
+                            {{ result.description }}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </script>
+    
+    <script type="text/ng-template" id="/view/article">
+        <div id="article">
+            <h1>{{title}}</h1>
+            <div ng-bind-html="content"></div>
+        </div>
+    </script>
+    
+    <footer>
+        <nav>
+            <ul id="footer-nav">
+                <li>
+                    <a href="#">Imprint</a>
+                </li>
+                <li>
+                    <a href="#">Cookie Policy</a>
+                </li>
+                <li>
+                    <a href="#">Contact</a>
+                </li>
+            </ul>
+        </nav>
+    </footer>
+</body>
+
+</html>

@@ -6,24 +6,66 @@
  * @param {String} langCode is the 2-digit language code for Wikipedia. (Example: 'en')
  */
 var Wikipedia = function (langCode) {
-    var self = this;
-    self.url = 'http://' + (langCode || 'en') + '.wikipedia.org/w/api.php';
-    self.baseRequest = {
-        format: 'json',
-        origin: 'https://www.mediawiki.org'
-    };
-
+    var xhr = null;
+    
     /**
      * Searches for a string using the Wiki API
      * @param {String} searchTerm
      * @param {Function} callback has one parameter, which either contains the result or is 'false' if there was a problem.
      */
-    self.searchFor = function (searchTerm, callback) {
+    this.searchFor = function (searchTerm, limit, callback) {
         query({
-            action: 'openSearch',
-            search: searchTerm
+            action: 'opensearch',
+            search: searchTerm,
+            limit: limit
         }, function (result) {
-            callback(result);
+            if (!result) {
+                return;
+            }
+
+            var pages = [];
+
+            for (var i in result[1]) {
+                var page = {
+                    title: result[1][i],
+                    description: result[2][i],
+                    link: result[3][i]
+                };
+                pages.push(page);
+            }
+
+            callback(pages);
+        });
+    };
+
+    /**
+     * http://en.wikipedia.org/w/api.php?format=json&action=query&prop=revisions&titles=Stack%20Overflow&rvprop=content&rvsection=0&rvparse
+     */
+    this.getArticle = function (name, callback) {
+        query({
+            action: 'parse',
+            page: name
+        }, function (result) {
+            if (result) {
+                callback(result.parse);
+            }
+        });
+    };
+
+    /**
+     * Gets the article html without using JSON or similar.
+     */
+    this.getArticleContent = function (name, callback) {
+        if (xhr)
+            xhr.abort();
+        
+        xhr = $.ajax({
+            url: '/' + langCode + '/wiki/' + name,
+            type: 'GET',
+            success: callback,
+            error: function() {
+                callback(false);   
+            }
         });
     };
 
@@ -33,10 +75,13 @@ var Wikipedia = function (langCode) {
      * @param {Function} callback has one paramter that gives back the original response of Wikipedia as an object.
      */
     function query(request, callback) {
-        request = $.extend(self.baseRequest, request);
+        if (xhr)
+            xhr.abort();
+        
+        request.format = 'json';
 
-        $.ajax({
-            url: self.url,
+        xhr = $.ajax({
+            url: '/' + langCode + '/wiki',
             data: request,
             xhrFields: {
                 'withCredentials': true
