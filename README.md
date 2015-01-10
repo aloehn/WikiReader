@@ -1,6 +1,6 @@
 #WikiReader
 
-WikiReader is a simple web application to search for article from Wikipedia.org and read them. 
+WikiReader is a simple web application to search for articles from Wikipedia.org and read them. 
 
 On server side, it was written in NodeJS and uses the [microtemplates](https://github.com/paulmillr/microtemplates/) plugin to render out the views. The client side is based on AngularJS.
 
@@ -16,7 +16,7 @@ To put it simply, the main functionalities are:
 
 ###Features
 
-- **Live search.** There is no need to klick on 'find' or press enter when the user wants to search for articles. It now happens automatically while the user presses the keys.
+- **Live search.** There is no need to klick on 'find' or press enter when the user wants to search for articles. It now happens automatically when the user presses the keys.
 
 - **Multi language support.** Just a simple multi language feature.
 
@@ -26,9 +26,9 @@ To put it simply, the main functionalities are:
 
 The *index.js* is the entrance point for the application. It does the following things:
 
-* Use the wiki module.
-* Allow access to the public folder. 
-* Detect the browser language and redirect the user.
+* Uses the wiki module.
+* Allows access to the public folder. 
+* Detects the browser language and redirects the user.
 * Sends the start page in the specified language to the client.
 * And of course, starts the server.
 
@@ -51,14 +51,14 @@ This module Works as a proxy for the Wiki API. The request of the client will be
 
 ###Views
 
-- **/view/search** is the model for the *SearchController*. It consists of an search field for user input and a result view that lists all the articles.
+- **/view/search** is the model for the *SearchController*. It consists of a search field for user input and a result view that lists all the articles.
 - **/view/article** is the model for the *ArticleController*.
 
-Because of the fact that there are just two views and they are not very complex, the views are included to the *index.htm* and not in a seperate folder.
+Because of the fact that there are just two views which are not very complex, the views are included to the *index.htm* and not in a seperate folder.
 
 ###Core
 
-- **Wikipedia** is the client side module for accessing Wikipedia.org. It communicates with the server side **/lib/wiki** module and is all about getting data from Wikipedia. It uses a Ajax/JSON communication, as well as Ajax/HTML for the *Improved article forwarding* feature. It is seperate from the controllers and could be used in other projects.
+- **Wikipedia** is the client side module for accessing Wikipedia.org. It communicates with the server side **/lib/wiki** module and involves around getting data from Wikipedia. It uses a Ajax/JSON communication, as well as Ajax/HTML for the *Improved article forwarding* feature. It is seperate from the controllers and could be used in other projects.
 
 ##Folder structure
 
@@ -74,7 +74,7 @@ Because of the fact that there are just two views and they are not very complex,
 
 **node_modules** contains NodeJS plugins.
 
-**public** contains the client side files, such as the view or the resources. Everything not in the *public* folder relates to the server and cannot be reached by the user directly.
+**public** contains the client side files, such as the view or the resources. Anything not in the *public* folder relates to the server and cannot be reached by the user directly.
 
 - **controller** contains all AngularJS controller. 
 - **core** contains modules with a deeper logic.
