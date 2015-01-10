@@ -1,6 +1,21 @@
 {
-    "title": "",
+    "language": "de",
+    "title": "Wiki Reader - by Alexander Löhn",
+    "meta": {
+        "language": "de",
+        "keywords": "wiki, wikipedia, suche, finden, modern, minimalistisch",
+        "description": "Find Wikipedia.org articles and read them with minimalistic design."
+    },
     "search": {
-        "placeholder": "Lass uns deinen Artikel finden ..."
+        "placeholder": "Finden wir deinen Artikel ...",
+        "button": "Los",   
+        "infoText": "{{ result.time }} ms für {{result.list.length}} Ergebnisse."
+    },
+    "article": {
+        "loadingText": "Artikel wird geladen ...",   
+        "errorText": "Upps! Da gab es wohl ein Problem!"   
+    },
+    "footer": {
+        "contact": "Mail an den Entwickler >>"   
     }
 }

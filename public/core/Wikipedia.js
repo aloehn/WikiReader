@@ -1,5 +1,3 @@
-/* jshint strict: true */
-
 /**
  * A core library that handles the Wikipedia API.
  * All request to Wikipedia will go through this class.
@@ -45,17 +43,22 @@ var Wikipedia = function (langCode) {
         query({
             action: 'parse',
             page: name
-        }, function (result) {
+        }, function (result, errData) {
             if (result) {
                 callback(result.parse);
+            }
+            else {
+                callback(result, errData);
             }
         });
     };
 
+    
+    // TODO: Vorerst entfernen...
     /**
      * Gets the article html without using JSON or similar.
      */
-    this.getArticleContent = function (name, callback) {
+    /*this.getArticleContent = function (name, callback) {
         if (xhr)
             xhr.abort();
         
@@ -67,7 +70,7 @@ var Wikipedia = function (langCode) {
                 callback(false);   
             }
         });
-    };
+    };*/
 
     /**
      * Queries the Wikipedia API
@@ -81,7 +84,7 @@ var Wikipedia = function (langCode) {
         request.format = 'json';
 
         xhr = $.ajax({
-            url: '/' + langCode + '/wiki',
+            url: './' + langCode + '/wiki',
             data: request,
             xhrFields: {
                 'withCredentials': true
@@ -89,8 +92,8 @@ var Wikipedia = function (langCode) {
             type: 'GET',
             dataType: 'json',
             success: callback,
-            error: function () {
-                callback(false);
+            error: function (data) {
+                callback(false, data.responseJSON || data.responseText);
             }
         });
     }

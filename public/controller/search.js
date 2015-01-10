@@ -1,47 +1,34 @@
-app.controller('SearchController', ['$scope', '$location', '$routeParams',
-    function ($scope, $location, $routeParams) {
-        var wiki = new Wikipedia('en');
+app.controller('SearchController', ['$scope', '$location', '$routeParams', '$route',
+    function ($scope, $location, $routeParams, $route) {
+        var wiki = new Wikipedia(app.settings.language);
         var keypressTimeout = null;
         var requestStarted = null;
-        $scope.searchText = $routeParams.articleName;
-        $scope.results = [];
 
+        $scope.searchText = $routeParams.articleName || '';
+        $scope.results = [];
+        $scope.pageClass = 'page-search';
+
+        // Auto focus the input box.
         setTimeout(function () {
             $('#search input')[0].select();
         }, 500);
 
+        // Start search of the url contains a search text.
         if ($scope.searchText) {
-            search($scope.searchText, 20);
+            search($scope.searchText, 10);
         }
 
         $scope.search = function (searchTerm) {
             if (keypressTimeout)
                 clearTimeout(keypressTimeout);
 
-            $location.path("/search/" + searchTerm);
+            search(searchTerm, 20)
         };
 
+        // Check the user input and begin search automatically if the input seems OK.
         $scope.keypress = function (userInput, $event) {
             if (keypressTimeout)
                 clearTimeout(keypressTimeout);
-
-            console.log($event.which);
-
-            switch ($event.which) {
-            case 38: // arrow up
-                moveSelection(-1);
-                break;
-            case 40: // arrow down
-                moveSelection(1);
-                break;
-            case 13: // Enter
-                if ($scope.result.selected) {
-                    setTimeout(function () {
-                        $scope.result.selected.trigger('click');
-                    }, 0);
-                    $event.preventDefault();
-                }
-            }
 
             if ($event.which < 32) {
                 return;
@@ -54,14 +41,21 @@ app.controller('SearchController', ['$scope', '$location', '$routeParams',
             }, 300);
         }
 
+        /**
+        *   Opens an article.
+        */
         $scope.open = function (articleName) {
             $location.path("/article/" + articleName);
         };
 
-
+        /**
+        *   Searches for the user input and updates the url.
+        */
         function search(searchTerm, limit) {
             searchTerm = searchTerm.trim();
             requestStarted = new Date();
+
+            $location.path("/search/" + $scope.searchText);
 
             if ($scope.result && $scope.result.searchText === searchTerm)
                 return;
@@ -77,32 +71,11 @@ app.controller('SearchController', ['$scope', '$location', '$routeParams',
             });
         };
 
-        $scope.unselect = function() {
-            if ($scope.result.selected) {
-                $scope.result.selected.removeClass('selected');
-                $scope.result.selectedIndex = 0;
-            }
-        };
-
-        function moveSelection(step) {
-            var index = 0;
-            var result = $scope.result;
-            if (!result)
-                return;
-
-            if (result.elements) {
-                index = result.selectedIndex;
-                var selected = result.selected || result.elements.eq(index);
-                selected.removeClass('selected');
-                index += step;
-                index = Math.max(index, 0);
-                index = Math.min(index, result.elements.length - 1);
-            } else {
-                result.elements = $('#results a');
-            }
-
-            result.selected = result.elements.eq(index)
-                .addClass('selected');
-            result.selectedIndex = index;
-        }
+        // If the url was changed because a new search text was entered,
+        // the application doesn't need to update the whole page.
+        var lastRoute = $route.current;
+        $scope.$on('$locationChangeSuccess', function (event) {
+            if ($route.current.templateUrl == '/view/search')
+                $route.current = lastRoute;
+        });
 }]);

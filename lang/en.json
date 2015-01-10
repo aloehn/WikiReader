@@ -1,6 +1,21 @@
 {
-    "title": "WikiReader v1.0 (by Alexander Löhn)",
+    "language": "en",
+    "title": "Wiki Reader - by Alexander Löhn",
+    "meta": {
+        "language": "en",
+        "keywords": "wiki, wikipedia, search, find, modern, minimalistic",
+        "description": "Find Wikipedia.org articles and read them with minimalistic design."
+    },
     "search": {
-        "placeholder": "Lets find your article ..."
+        "placeholder": "Let's find your article ...",
+        "button": "Find",
+        "infoText": "We've found <b>{{result.list.length}}</b> articles for <b>'{{ result.searchText }}'</b> in {{ result.time }} ms"
+    },
+    "article": {
+        "loadingText": "Loading article ...",
+        "errorText": "Oops! There seems to be a problem!"
+    },
+    "footer": {
+        "contact": "Contact the developer >>"   
     }
 }
