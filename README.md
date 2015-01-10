@@ -1,6 +1,11 @@
 #WikiReader
 
-WikiReader is a simple client based web application. On server side, it was written in NodeJS and uses the [microtemplates](https://github.com/paulmillr/microtemplates/) plugin to render out the views. The client side is based on AngularJS.
+WikiReader is a simple web application to search for article from Wikipedia.org and read them. 
+
+On server side, it was written in NodeJS and uses the [microtemplates](https://github.com/paulmillr/microtemplates/) plugin to render out the views. The client side is based on AngularJS.
+
+- Homepage: [https://github.com/loehx/WikiReader](https://github.com/loehx/WikiReader)
+- Example page: [http://loehx.eltanin.uberspace.de/wikireader](http://loehx.eltanin.uberspace.de/wikireader).
 
 ##Functionality
 
@@ -55,7 +60,7 @@ Because of the fact that there are just two views and they are not very complex,
 
 - **Wikipedia** is the client side module for accessing Wikipedia.org. It communicates with the server side **/lib/wiki** module and is all about getting data from Wikipedia. It uses a Ajax/JSON communication, as well as Ajax/HTML for the *Improved article forwarding* feature. It is seperate from the controllers and could be used in other projects.
 
-##Folder Structure
+##Folder structure
 
 **index.js** starts the server. It handles the following requests:
 
@@ -67,12 +72,16 @@ Because of the fact that there are just two views and they are not very complex,
 
 **lib** contains the JavaScript/NodeJS files, which are used by the *index.js* in the root folder.
 
-**node_modules** contains the NodeJS plugins.
+**node_modules** contains NodeJS plugins.
 
 **public** contains the client side files, such as the view or the resources. Everything not in the *public* folder relates to the server and cannot be reached by the user directly.
 
 - **controller** contains all AngularJS controller. 
 - **core** contains modules with a deeper logic.
 - **resrc** contains all assets.
+
+##Change log
+
+- **v0.1.0** Beta version
 
 README from January 10, 2015

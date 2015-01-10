@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "A simple reader using the Wikipedia API",
   "author": "Alexander Löhn <alexloehn@yahoo.de>",
+  "homepage": "https://github.com/loehx/WikiReader",
   "dependencies": {
     "express": "4.10.x",
     "follow-redirects": "0.0.3",
