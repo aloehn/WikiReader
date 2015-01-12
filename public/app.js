@@ -11,7 +11,7 @@ app.config(['$routeProvider',
                 templateUrl: '/view/search',
                 controller: 'SearchController'
             })
-            .when('/article/:articleName', {
+            .when('/article/:articleName*', {
                 templateUrl: '/view/article',
                 controller: 'ArticleController'
             })

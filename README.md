@@ -83,5 +83,8 @@ Because of the fact that there are just two views which are not very complex, th
 ##Change log
 
 - **v0.1.0** Beta version
+- **v0.1.1**
+	- Bug fixed: Articles with a slash in the name '/' cannot be opened #1.
+	- HTTPS support.
 
-README from January 10, 2015
+README updated January 12, 2015
